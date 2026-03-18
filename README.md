@@ -1,14 +1,14 @@
 # js-assignment-group-11
-pearl shop website
+PEARL SHOP WEBSITE
 .members 
-karunga Patience
-Lubega paul
-Namakula Nashibah
-Bulamu Kirabo Kristiana
-Nassolo Diana
-.Nakawooya Hajjarah
-.Wandeka Bruno
-Alinaitwe Arnold
-.Nabukenya Ronita
-.Nampijja Leocardia
- The website allows users to select products  and add them to the cart view them and get billed then  get delivered to there adddresses
+KARUNGA PATIENCE
+LUBEGA PAUL
+NAMAKULA NASHIBA
+BULAMU KIRABO KRISTIANA
+NASSOLO DIANA
+NAKAWOOYA HAJARA
+WANDEKA BRUNO
+ALINAITWE ARNOLD
+NABUKENYA RONITAH
+NAMPIJJA LEOCADIA
+ The website allows users to select products , add them to the cart, view them and get billed then  get delivered to their adddresses that they write while checking out.
