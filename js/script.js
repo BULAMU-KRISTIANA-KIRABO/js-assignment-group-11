@@ -11,7 +11,6 @@ const products = [
   { id: 10, name: "Wall Clock",      price: 42000,   category: "Home",        image: "Images/clock.jpg" }
 ];
 let selectedCategory = "All";
-
 //function to Read the cart from localStorage
 function getCart() {
   try {
@@ -25,7 +24,6 @@ function getCart() {
     return [];
   }
 }
-
 //a function to Save the cart to localStorage
 function saveCart(cart) {
   try {
@@ -43,12 +41,12 @@ function getCartCount() {
   return total;
 }
 
-//a function to Format a number as UGX currency 
+//a function to Format a number as UGX currency by adding the UGX at the start and commas.
 function formatPrice(amount) {
   return "UGX " + amount.toLocaleString();
 }
 
-//a function to updates the number shown next to "Cart" in the navbar
+//a function to updates the number shown next to "Cart" in the navbar and shows the number of items in the cart
 function updateCartBadge() {
   let badge = document.getElementById("cart-count");
   if (badge !== null) {
@@ -63,20 +61,27 @@ function showProducts(list) {
   if (grid === null) return;
 
   grid.innerHTML = "";
+//if no products match, show the "no results" message
+  if (list.length === 0) {
+    noResults.style.display = "block";
+    return;
+  }
+//then hide the "no results" message and show
+  noResults.style.display = "none";
  
   for (let i = 0; i < list.length; i++) {
     let product = list[i];
     let card = document.createElement("div");
     card.className = "product-card";
-
-  
+//the card.innerHTML will the card with the product's image, category, name, price and an Add to Cart button.
+//The button stores data-id so JavaScript knows which product was clicked.
     card.innerHTML =
   "<div class='product-image'><img src='" + product.image + "' alt='" + product.name + "' /></div>" +
   "<span class='product-cat'>" + product.category + "</span>" +
   "<h3>" + product.name + "</h3>" +
   "<p class='product-price'>" + formatPrice(product.price) + "</p>" +
   "<button class='add-btn' data-id='" + product.id + "'>Add to Cart</button>";
-
+//to place the finished card onto the page inside the grid and repeat for every product in the list that was created in the array.
     grid.appendChild(card);
   }
   let buttons = document.querySelectorAll(".add-btn");
@@ -85,7 +90,7 @@ function showProducts(list) {
       let productId = parseInt(this.getAttribute("data-id"));
       addToCart(productId);
 
-      //this is used to Change button text briefly to confirm
+      //this is used to Change button text briefly to confirm that an item has been added to the card
       this.textContent = "Added!";
       let btn = this;
       setTimeout(function() {
@@ -107,7 +112,7 @@ function addToCart(productId) {
     if (product === null) return;
     let cart = getCart();
 
-    //this code Checks if this product is already in the cart
+    //this code Checks if this product is already in the cart,if an item is in the cart it increases the number by one when the user clicks to add again
     let found = false;
     for (let j = 0; j < cart.length; j++) {
       if (cart[j].id === productId) {
@@ -168,17 +173,16 @@ function filterByCategory(category) {
   searchProducts();
 }
 
-
+//this shows all the items in the cart
 function showCart() {
   let cartList    = document.getElementById("cart-list");
   let emptyMsg    = document.getElementById("empty-message");
   let cartSummary = document.getElementById("cart-summary");
+  
   if (cartList === null) return;
-
   let cart = getCart();
-
   cartList.innerHTML = "";
-// If cart is empty
+// If cart is empty, show the empty message, hide the summary box and stop — there is nothing more to display.
   if (cart.length === 0) {
     emptyMsg.style.display    = "block";
     cartSummary.style.display = "none";
@@ -194,7 +198,7 @@ function showCart() {
     let row = document.createElement("div");
     row.className = "cart-item";
 
-    //the innerHTML fills the row with the item details
+    //the innerHTML fills the row with the details of the item that has been ordered
     row.innerHTML =
       "<div class='cart-item-left'>" +
         "<div class='cart-item-image'>" + item.image + "</div>" +
@@ -211,6 +215,8 @@ function showCart() {
       "<button class='remove-btn' data-id='" + item.id + "'>Remove</button>";
     cartList.appendChild(row);
   }
+  //For every + and - button on the page,a click listener is added to each one.
+  //When clicked, it reads the `data-id` and `data-action` from that button and calls `changeQuantity()` with those values to update the cart.
   let qtyBtns = document.querySelectorAll(".qty-btn");
   for (let q = 0; q < qtyBtns.length; q++) {
     qtyBtns[q].addEventListener("click", function() {
@@ -250,7 +256,7 @@ function changeQuantity(productId, action) {
 
     saveCart(cart);
     showCart();        // Redraws the cart
-    updateCartBadge(); // Updates navbar number
+    updateCartBadge(); // Updates navbar number on the home page
 
   } catch (error) {
     alert("Error changing quantity: " + error);
@@ -342,7 +348,7 @@ function setupCheckoutForm() {
       if (phone.length !== 10 || isNaN(phone)) {
         throw new Error("Phone number must be exactly 10 digits.");
       }
- //this is to Calculate grand total
+ //this is to Calculate grand total of all the purchases made
     let total = 0;
       for (let i = 0; i < cart.length; i++) {
         total = total + (cart[i].price * cart[i].quantity);
