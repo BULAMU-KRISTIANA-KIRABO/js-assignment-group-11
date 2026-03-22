@@ -19,7 +19,7 @@ nav {
 }
 
 nav h1 {
-  font-size: 22px;
+  font-size: 25px;
 }
 
 nav a {
@@ -156,10 +156,14 @@ nav a:hover {
   font-size: 14px;
   cursor: pointer;
   width: 100%;
+  transition: background-color 0.3s ease;
 }
 
 .add-btn:hover {
   background-color:burlywood;
+}
+.add-btn:active {
+  background-color: #1a73e8;
 }
 
 /* page titles */
@@ -200,10 +204,6 @@ nav a:hover {
   display: flex;
   align-items: center;
   gap: 14px;
-}
-
-.cart-item-emoji {
-  font-size: 36px;
 }
 
 .cart-item-name {
